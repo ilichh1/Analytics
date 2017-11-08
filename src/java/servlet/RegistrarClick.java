@@ -47,6 +47,7 @@ public class RegistrarClick extends HttpServlet {
         JSONObject json = new JSONObject();
         json.put("recibido", true);
         
+        response.setContentType("application/json");
         out.print(json.toString());
         
         //Matamos este Servlet
