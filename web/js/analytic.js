@@ -5,5 +5,7 @@ document.addEventListener("click", registrarClick);
 
 function registrarClick(e) {
     console.log(e);
-    
+    $.post(
+            ""
+            );
 }

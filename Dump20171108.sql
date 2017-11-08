@@ -1,5 +1,4 @@
-CREATE DATABASE  IF NOT EXISTS `clicks` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `clicks`;
+USE `analytics`;
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: clicks
