@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import pojo.Click;
 
@@ -35,6 +36,20 @@ public class Consulta extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            
+            String tipoConsulta = request.getParameter("tipo");
+            
+            if (tipoConsulta != null && !tipoConsulta.isEmpty() && tipoConsulta.equals("clicks")) {
+                
+                ClickDAO clickDAO = new ClickDAO();
+                JSONArray jsonResponse = new JSONArray(clickDAO.getClicksByElements());
+                
+                response.setContentType("application/json");
+                out.print(jsonResponse.toString());
+                out.close();
+                
+                this.destroy();
+            }
             
             ClickDAO clickDAO = new ClickDAO();
             JSONObject jsonResponse = new JSONObject();
