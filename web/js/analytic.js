@@ -21,7 +21,7 @@ function registrarClick(evento) {
             "registrarclick",
             {data:JSON.stringify(data)},
             function(respuestaServidor) {
-                window.console.log(respuestaServidor.success);
+                window.console.log(respuestaServidor);
             },
             "application/json"
             );
