@@ -46,5 +46,9 @@ Contributor(s):
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/analytics?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password">Ilichh123</property>
+    
+    <!-- Mapeamos nuestras clases -->
+    <mapping class="pojo.Click"/>
+    
   </session-factory>
 </hibernate-configuration>
