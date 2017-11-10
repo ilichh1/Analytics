@@ -31,9 +31,10 @@ public class ClickDAO {
     public List<Object> getClicksByElements() {
         return (List<Object>) this.session.createCriteria(Click.class)
                 .setProjection(Projections.projectionList()
-                    .add(Projections.rowCount())
                     .add(Projections.groupProperty("targetTagname"))
+                    .add(Projections.rowCount(), "clicks")
                 )
+                .addOrder(Order.desc("clicks"))
                 .list();
     }
     
