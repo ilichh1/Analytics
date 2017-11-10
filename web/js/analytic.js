@@ -16,11 +16,13 @@ function registrarClick(evento) {
     data.idTarget = evento.target.id;
     data.outerHTMLTarget = evento.target.outerHTML;
     data.target = evento.target.tagName;
-    window.console.log(data);
+    //window.console.log(data);
     $.post(
             "registrarclick",
             {data:JSON.stringify(data)},
-            function(respuestaServidor) {},
+            function(respuestaServidor) {
+                window.console.log(respuestaServidor);
+            },
             "application/json"
             );
 }
