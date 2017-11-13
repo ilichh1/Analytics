@@ -1,9 +1,8 @@
-USE `analytics`;
--- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.17, for Linux (x86_64)
 --
--- Host: localhost    Database: clicks
+-- Host: localhost    Database: analytics
 -- ------------------------------------------------------
--- Server version	5.5.58-log
+-- Server version	5.7.20
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -36,17 +35,8 @@ CREATE TABLE `click` (
   `outerhtml_target` text,
   `target` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`idClick`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=264 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `click`
---
-
-LOCK TABLES `click` WRITE;
-/*!40000 ALTER TABLE `click` DISABLE KEYS */;
-/*!40000 ALTER TABLE `click` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -57,4 +47,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-11-08 18:47:02
+-- Dump completed on 2017-11-13  9:13:20
