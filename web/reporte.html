@@ -19,12 +19,12 @@ Licencia pendiente, para cambiar la licencia ir a -> Tools | Templates
         <div id="first-chart-holder">
             <canvas id="grafica-clicks"></canvas>
         </div>
-        <button id="imprimir-graficaClicks">Imprimir</button>
-        <img id="img">
+        <button id="actualizar-grafica">Actualizar</button>
 
-        <script src="../js/jquery-3.2.1.min.js" ></script>
+        <script src="js/jquery-3.2.1.min.js" ></script>
         <script src="js/chart.js"></script>
         <script>
+            document.onload = loadDataToChart();
             document.clickChartData = {};
             document.clicksChart = null;
             var chartCanvas = document.getElementById("grafica-clicks");
@@ -40,38 +40,33 @@ Licencia pendiente, para cambiar la licencia ir a -> Tools | Templates
                 }
             });
 
-            // POST request to get data to pupulate our chart
-            $.get(
-                    "../consulta",
-                    {tipo: "clicks2"},
-                    function (data) {
-                        document.clickChartData = data;
-                        document.clicksChart = new Chart(chartCtx, {
-                            type: "bar",
-                            data: {
-                                labels: document.clickChartData.elements,
-                                datasets: [{
-                                        label: "# de clicks",
-                                        data: document.clickChartData.clicks,
-                                        backgroundColor: 'rgb(255, 50, 100)',
-                                        borderColor: 'rgb(255, 99, 132)',
-                                    }]
-                            },
-                            options: {
-                                bezierCurve: false,
-                            }
-                        });
-                    });
-
-            document.getElementById("imprimir-graficaClicks").addEventListener("click", function () {
-
-                $.post(
-                        "../reporte",
-                        {chart: document.clicksChart.toBase64Image()},
+            function loadDataToChart() {
+                // POST request to get data to pupulate our chart
+                $.get(
+                        "consulta",
+                        {tipo: "clicks2"},
                         function (data) {
-                            window.console.log(data);
+                            document.clickChartData = data;
+                            document.clicksChart = new Chart(chartCtx, {
+                                type: "bar",
+                                data: {
+                                    labels: document.clickChartData.elements,
+                                    datasets: [{
+                                            label: "# de clicks",
+                                            data: document.clickChartData.clicks,
+                                            backgroundColor: 'rgb(255, 40, 85)',
+                                            borderColor: 'rgb(255, 99, 132)'
+                                        }]
+                                },
+                                options: {
+                                    bezierCurve: false
+                                }
+                            });
                         });
-
+            }
+            
+            document.getElementById("actualizar-grafica").addEventListener("click", function(e){
+                loadDataToChart();
             });
         </script>
     </body>
