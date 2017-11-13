@@ -6,6 +6,7 @@ package servlet;
 import dao.ClickDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,25 +39,38 @@ public class Consulta extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             
             String tipoConsulta = request.getParameter("tipo");
+            response.setContentType("application/json");
+            ClickDAO clickDAO = new ClickDAO();
             
             if (tipoConsulta != null && !tipoConsulta.isEmpty() && tipoConsulta.equals("clicks")) {
-                
-                ClickDAO clickDAO = new ClickDAO();
                 JSONArray jsonResponse = new JSONArray(clickDAO.getClicksByElements());
                 
-                response.setContentType("application/json");
                 out.print(jsonResponse.toString());
+                out.close();
+                
+                this.destroy();
+            } else if(tipoConsulta != null && !tipoConsulta.isEmpty() && tipoConsulta.equals("clicks2")) {
+                JSONObject jsonObject = new JSONObject();
+                
+                List<String> labels = new ArrayList<>();
+                List<Long> clicks = new ArrayList<>();
+                
+                for (Object[] item : clickDAO.getClicksByElementsArray()) {
+                    labels.add((String) item[0]);
+                    clicks.add((long) item[1]);
+                }
+                
+                jsonObject.put("elements", new JSONArray(labels));
+                jsonObject.put("clicks", new JSONArray(clicks));
+                out.print(jsonObject.toString());
                 out.close();
                 
                 this.destroy();
             }
             
-            ClickDAO clickDAO = new ClickDAO();
             JSONObject jsonResponse = new JSONObject();
             List<Click> clicks = clickDAO.getAllClicks();
             jsonResponse.put("clicks", clicks);
-            
-            response.setContentType("application/json");
             
             out.print(jsonResponse.toString());
             out.close();
