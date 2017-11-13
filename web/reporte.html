@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<!--
+Licencia pendiente, para cambiar la licencia ir a -> Tools | Templates
+-->
+<html>
+    <head>
+        <title>Chart JS</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            #first-chart-holder {
+                max-height: 25%;
+                padding: 2%;
+            }
+        </style>
+    </head>
+    <body>
+        <h3>Graficas</h3>
+        <div id="first-chart-holder">
+            <canvas id="grafica-clicks"></canvas>
+        </div>
+        <button id="actualizar-grafica">Actualizar</button>
+
+        <script src="js/jquery-3.2.1.min.js" ></script>
+        <script src="js/chart.js"></script>
+        <script>
+            document.onload = loadDataToChart();
+            document.clickChartData = {};
+            document.clicksChart = null;
+            var chartCanvas = document.getElementById("grafica-clicks");
+            var chartCtx = chartCanvas.getContext("2d");
+
+            // draw background
+            var backgroundColor = 'white';
+            Chart.plugins.register({
+                beforeDraw: function (c) {
+                    var ctx = c.chart.ctx;
+                    ctx.fillStyle = backgroundColor;
+                    ctx.fillRect(0, 0, c.chart.width, c.chart.height);
+                }
+            });
+
+            function loadDataToChart() {
+                // POST request to get data to pupulate our chart
+                $.get(
+                        "consulta",
+                        {tipo: "clicks2"},
+                        function (data) {
+                            document.clickChartData = data;
+                            document.clicksChart = new Chart(chartCtx, {
+                                type: "bar",
+                                data: {
+                                    labels: document.clickChartData.elements,
+                                    datasets: [{
+                                            label: "# de clicks",
+                                            data: document.clickChartData.clicks,
+                                            backgroundColor: 'rgb(255, 40, 85)',
+                                            borderColor: 'rgb(255, 99, 132)'
+                                        }]
+                                },
+                                options: {
+                                    bezierCurve: false
+                                }
+                            });
+                        });
+            }
+            
+            document.getElementById("actualizar-grafica").addEventListener("click", function(e){
+                loadDataToChart();
+            });
+        </script>
+    </body>
+</html>
